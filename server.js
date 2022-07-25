@@ -8,7 +8,7 @@ const uuid = require('./helpers/uuid');
 
 const notes = require('./db/db.json');
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 
@@ -18,8 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
-// Routes
-// -----------------------------------------
+// Routes--------------------
 
 // GET Route for homepage
 app.get('/', (req, res) =>
@@ -29,9 +28,6 @@ app.get('/', (req, res) =>
 app.get('/notes', (req, res) =>
     res.sendFile(path.join(__dirname, '/public/notes.html'))
 );
-
-// app.get('/api/notes', (req, res) => res.json(notes));
-// app.post('/api/notes', (req, res) => res.json(notes));
 // --------------------------------------------
 
 // Promise version of fs.readFile
@@ -114,41 +110,8 @@ app.delete('/api/notes/:id', (req, res) => {
     console.info(`${req.method} request received to DELETE a NOTE`);
     console.info(req.body.id);
     readAndDelete(req, './db/db.json');
-    res.json(`Note added successfully 🚀`);
+    res.json(`Note DELETED successfully`);
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 app.listen(PORT, () =>
     console.log(`Example app listening at http://localhost:${PORT}`)
